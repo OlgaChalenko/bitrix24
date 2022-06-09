@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modification>
+	<name>NeoSeo Bitrix24</name>
+	<version>1.0</version>
+	<code>neoseo-bitrix24</code>
+	<author>NeoSeo</author>
+	<link>http://neoseo.com.ua/neoseo-bitrix24</link>
+
+	<file path="catalog/model/account/customer.php">
+		<operation>
+			<search><![CDATA[return $customer_id;]]></search>
+			<add position="before"><![CDATA[		/* NeoSeo Bitrix24 - begin */
+		if($this->config->get('neoseo_bitrix24_status') == 1 && $this->config->get('neoseo_bitrix24_add_lead_register') == 1){
+			$this->load->model('tool/neoseo_bitrix24');
+			$this->model_tool_neoseo_bitrix24->createEntity($customer_id, $this->config->get('neoseo_bitrix24_source_lead_register'));
+		}
+		/* NeoSeoBitrix24 - end */]]></add>
+		</operation>
+	</file>
+
+	<file path="catalog/model/checkout/order.php">
+		<operation>
+			<search><![CDATA[public function addOrderHistory(]]></search>
+			<add position="after"><![CDATA[		/* NeoSeo Bitrix24 - begin */
+		if($this->config->get('neoseo_bitrix24_status') == 1 && $this->config->get('neoseo_bitrix24_add_deal_order') == 1){
+			$this->load->model('tool/neoseo_bitrix24');
+			$this->model_tool_neoseo_bitrix24->createDeal($order_id, $order_status_id);
+		}
+		/* NeoSeoBitrix24 - end */]]></add>
+		</operation>
+	</file>
+	
+</modification>
