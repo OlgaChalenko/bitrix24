@@ -1,4 +1,4 @@
-# bitrix24
+# bitrix24, Opencart 3
 Before starting synchronization, you need to set up webhooks, through which data is exchanged between Bitrix24 and the online store. You can do this in the “Applications” section of Bitrix24.
 
 The module supports the following rights:
